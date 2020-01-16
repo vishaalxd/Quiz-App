@@ -1,0 +1,69 @@
+{
+    "questions": [
+        {
+            "question":"  JavaScript is can be written -",
+            "options":{
+                "A":"directly into JS file and included into HTML",
+                "B":"directly into HTML pages",
+                "C":"directly on the Server Script",
+                "D":"None of these"
+            },
+            "answer":"A",
+            "difficulty":"Easy"
+        },
+        {
+            "question":"  JavaScript  -",
+            "options":{
+                "A":"directly into JS file and included into HTML",
+                "B":"directly into HTML pages",
+                "C":"directly on the Server Script"
+            },
+            "answer":"C",
+            "difficulty":"Moderate"
+        },
+        {
+            "question":"  JavaScript is  -",
+            "options":{
+                "A":"directly into JS ",
+                "B":"directly into HTML pages",
+                "C":"directly on the Server Script",
+                "D":"None of these"
+            },
+            "answer":"B",
+            "difficulty":"Hard"
+        },
+        {
+            "question":"  JavaScript is can  -",
+            "options":{
+                "A":"directly into JS file and included into HTML",
+                "B":"directly into HTML pages",
+                "C":"directly on the Server Script",
+                "D":"None of these"
+            },
+            "answer":"A",
+            "difficulty":"Easy"
+        },
+        {
+            "question":"  JavaScript is can be ",
+            "options":{
+                "A":"directly into JS file and included into HTML",
+                "B":"directly into HTML pages",
+                "C":"directly on the Server Script",
+                "D":"None of these"
+            },
+            "answer":"C",
+            "difficulty":"Moderate"
+        },
+        {
+            "question":"  JavaScript is can be written -",
+            "options":{
+                "A":"directly into JS file and included into HTML",
+                "B":"directly into HTML pages",
+                "C":"directly on the Server Script",
+                "D":"None of these"
+            },
+            "answer":"B",
+            "difficulty":"Hard"
+        }
+    ]
+}
