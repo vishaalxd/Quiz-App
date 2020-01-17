@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import mockData from "./mockData.json";
-import { QuestionCard } from "../Components/CommonComponents.js";
+import { QuestionCard } from "../Components/QuestionCard";
 
 class Assessment extends Component {
   constructor(props) {
