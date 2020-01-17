@@ -50,13 +50,11 @@ class Assessment extends Component {
 
   getCurrentTimer = () => {
     let timer = this.decisionTree.accessTimers[this.getCurrentQuestion().difficulty]
-    console.log(timer);
     return timer;
   }
 
   getCurrentPoints = () => {
-    let points = this.decisionTree.accessTimers[this.getCurrentQuestion().difficulty]
-    console(points);
+    let points = this.decisionTree.accessPoints[this.getCurrentQuestion().difficulty]
     return points;
   }
 
@@ -64,19 +62,11 @@ class Assessment extends Component {
   timeOut = () => {
     let question = { ...this.state.questions[this.state.current] },
       currentOptions = [null, null, null, null];
-    currentOptions[this.keyMapper(question.answer)] = "correct";
-    this.setState({ currentOptions });
-  };
 
-  //Counter TIck
-  tick = () => {
-    setTimeout(() => {
-      if (this.state.timer > 0) {
-        this.setState({ timer: this.state.timer - 1 });
-      } else {
-        this.setState({ timer: 0 });
-      }
-    }, 1000);
+    currentOptions[this.keyMapper(question.answer)] = "correct";
+    this.setState({ 
+      score: { ...this.state.score, [this.state.current + 1]: 0 },
+      currentOptions });
   };
 
   handleNext = () => {
@@ -99,8 +89,8 @@ class Assessment extends Component {
   findAnswer = answer => {
     let question = { ...this.state.questions[this.state.current] };
     if (question.answer === answer) {
-      return { question, reason: true };
-    } else return { question, reason: false };
+      return { question, reason: this.getCurrentPoints() };
+    } else return { question, reason: 0 };
   };
 
   //Handle Choice
@@ -121,7 +111,29 @@ class Assessment extends Component {
     } else return null;
   };
 
-  handleSubmit = () => {};
+  handleSubmit = () => {
+    const score = {...this.state.score};
+    const totalArr = Object.values(score);
+    const finalScore = totalArr.reduce((each, acc) => {
+     return acc + each;
+    },0);
+    console.log(finalScore);
+    const percentile = finalScore * 10 / this.state.questions.length;
+    console.log(percentile); 
+    // this.history.push("/results");
+  };
+
+  
+  //Counter TIck
+  tick = () => {
+    setTimeout(() => {
+      if (this.state.timer > 0) {
+        this.setState({ timer: this.state.timer - 1 });
+      } else {
+        this.setState({ timer: 0 });
+      }
+    }, 1000);
+  };
 
   componentDidMount() {
     let questions = mockData;
@@ -154,6 +166,7 @@ class Assessment extends Component {
   }
 
   render() {
+    // console.log(this.state.score)
     return (
       <>
         {/* <>Basic Assessment Tier</> */}

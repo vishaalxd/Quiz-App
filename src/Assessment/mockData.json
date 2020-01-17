@@ -18,7 +18,7 @@
                 "B":"directly into HTML pages",
                 "C":"directly on the Server Script"
             },
-            "answer":"C",
+            "answer":"B",
             "difficulty":"Moderate"
         },
         {
@@ -29,7 +29,7 @@
                 "C":"directly on the Server Script",
                 "D":"None of these"
             },
-            "answer":"B",
+            "answer":"C",
             "difficulty":"Hard"
         },
         {
@@ -51,7 +51,7 @@
                 "C":"directly on the Server Script",
                 "D":"None of these"
             },
-            "answer":"C",
+            "answer":"B",
             "difficulty":"Moderate"
         },
         {
@@ -62,7 +62,7 @@
                 "C":"directly on the Server Script",
                 "D":"None of these"
             },
-            "answer":"B",
+            "answer":"C",
             "difficulty":"Hard"
         }
     ]
