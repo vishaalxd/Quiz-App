@@ -25,8 +25,11 @@ export const QuestionCard = props => {
           each={props.content.questions[props.content.current]}
           handleNext={props.handleNext}
           handleSelection={props.handleSelection}
+          handleSubmit={props.handleSubmit}
           currentOptions={props.currentOptions}
           reason={props.reason}
+          next={props.next}
+          remainder={props.content.remainder}
         />
       </Layout>
     </Wrapper>
@@ -58,13 +61,19 @@ const CardHeader = ({ skills, remainder, timer }) => {
   );
 };
 
-const CardContent = ({ each, handleNext, handleSelection, currentOptions }) => {
+const CardContent = ({
+  each,
+  handleNext,
+  handleSelection,
+  currentOptions,
+  next,
+  remainder,
+  handleSubmit
+}) => {
   const question = each && each.question,
     options = each && each.options;
 
-
   const OptionComponent = () => {
-    console.log(currentOptions);
     return (
       <Options>
         {options &&
@@ -92,13 +101,25 @@ const CardContent = ({ each, handleNext, handleSelection, currentOptions }) => {
           <Question>{question}</Question>
           {OptionComponent()}
           <DisplayFlex right>
-            <PrimaryButton
-              onClick={() => {
-                handleNext();
-              }}
-            >
-              Next Question
-            </PrimaryButton>
+            {remainder ? (
+              <PrimaryButton
+                enable={next}
+                onClick={() => {
+                  handleNext();
+                }}
+              >
+                Next question
+              </PrimaryButton>
+            ) : (
+              <PrimaryButton
+                enable={next}
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                View results
+              </PrimaryButton>
+            )}
           </DisplayFlex>
         </CardBody>
       )}

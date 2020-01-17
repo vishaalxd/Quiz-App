@@ -13,7 +13,8 @@ class Assessment extends Component {
       currentOptions: [],
       timer: null,
       reason: true,
-      score: {}
+      score: {},
+      next: false
     };
   }
 
@@ -28,7 +29,38 @@ class Assessment extends Component {
     return Keys[key];
   };
 
-  //Counter Time Out 
+   //@type : Points & Timer Mapper
+  decisionTree = {
+    accessTimers: {
+      Easy: 30,
+      Moderate: 60,
+      Hard: 90
+    },
+    accessPoints: {
+      Easy: 5,
+      Moderate: 10,
+      Hard: 15
+    }
+  };
+
+  getCurrentQuestion = () => {
+    let question = { ...this.state.questions[this.state.current] }
+    return question;
+  }
+
+  getCurrentTimer = () => {
+    let timer = this.decisionTree.accessTimers[this.getCurrentQuestion().difficulty]
+    console.log(timer);
+    return timer;
+  }
+
+  getCurrentPoints = () => {
+    let points = this.decisionTree.accessTimers[this.getCurrentQuestion().difficulty]
+    console(points);
+    return points;
+  }
+
+  //Counter Time Out
   timeOut = () => {
     let question = { ...this.state.questions[this.state.current] },
       currentOptions = [null, null, null, null];
@@ -48,12 +80,19 @@ class Assessment extends Component {
   };
 
   handleNext = () => {
-    this.setState({
-      current: this.state.current + 1,
-      timer: null,
-      remainder: this.state.remainder && this.state.remainder - 1,
-      currentOptions: []
-    });
+    if (this.state.timer === 0 || this.state.currentOptions.length > 0) {
+      this.setState({
+        current: this.state.current + 1,
+        timer: null,
+        remainder: this.state.remainder && this.state.remainder - 1,
+        currentOptions: [],
+        next: false
+      });
+    } else return null;
+  };
+
+  enableNext = () => {
+    this.setState({ next: true });
   };
 
   //Find Answer after CTA
@@ -82,31 +121,37 @@ class Assessment extends Component {
     } else return null;
   };
 
+  handleSubmit = () => {};
+
   componentDidMount() {
     let questions = mockData;
     this.setState({ ...questions });
   }
 
   componentDidUpdate(prevProps, prevState) {
-
     //Ticker
     if (this.state.timer !== prevState.timer) {
-      if (this.state.timer <= 30 && this.state.timer > 0) {
+      if (this.state.timer <= this.getCurrentTimer()  && this.state.timer > 0) {
         this.tick();
       } else this.setState({ timer: 0 });
     }
 
     //Reset Counter On Next
     if (this.state.timer === null) {
-      this.setState({ timer: 30 });
+      this.setState({ timer: this.getCurrentTimer() });
     }
 
     //Feedback on Reset Counter
     if (this.state.timer === 0 && this.state.currentOptions.length === 0) {
       this.timeOut();
     }
-  }
 
+    //Disable Next CTA
+    if (this.state.currentOptions.length === 0 && this.state.timer === 0) {
+      this.enableNext();
+    }
+
+  }
 
   render() {
     return (
@@ -116,8 +161,10 @@ class Assessment extends Component {
           content={this.state}
           handleNext={this.handleNext}
           handleSelection={this.handleSelection}
+          handleSubmit={this.handleSubmit}
           reason={this.state.score[this.state.current + 1]}
           currentOptions={this.state.currentOptions}
+          next={this.state.next}
         />
       </>
     );

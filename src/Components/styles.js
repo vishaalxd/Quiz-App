@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
 export const Layout = styled.div`
   width: 100%;
   max-width: 1140px;
-  height:100vh;
+  height: 100vh;
   padding: 20px;
 `;
 
@@ -109,13 +109,27 @@ export const PrimaryButton = styled.div`
   padding: 10px 10px;
   margin: 0px 10px;
   width: 200px;
-  color: ${props => props.theme.colors.black};
+  // background: ${props => props.theme.colors.grey};
+  // color: ${props => props.theme.colors.black};
+  background: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.white};
+  pointer: cursor;
   font-size: ${props => props.theme.fontSize.primary};
-  border: 1px solid ${props => props.theme.colors.primary};
+  font-weight: 500;
   border-radius: 6px;
-  &:hover {
-    background: ${props => props.theme.colors.primary};
-    color: ${props => props.theme.colors.white};
-    font-weight:500;
-  }
+  ${props =>
+    props.enable
+      ? `background: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.white};pointer:cursor;`
+      : `background: ${props => props.theme.colors.grey};
+      color: ${props => props.theme.colors.black};pointer:none;`};
+  ${props =>
+    props.enable &&
+    `&:hover {
+    background: ${props => props.theme.colors.white};
+    color: ${props => props.theme.colors.black};
+    font-size: ${props => props.theme.fontSize.primary};
+    border: 1px solid ${props => props.theme.colors.primary};
+    font-weight: 500;
+  }`}
 `;
