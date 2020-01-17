@@ -17,6 +17,7 @@ class Assessment extends Component {
     };
   }
 
+  //@type : Option Mapper
   keyMapper = key => {
     const Keys = {
       A: 0,
@@ -27,27 +28,15 @@ class Assessment extends Component {
     return Keys[key];
   };
 
-  componentDidMount() {
-    let questions = mockData;
-    this.setState({ ...questions });
-  }
+  //Counter Time Out 
+  timeOut = () => {
+    let question = { ...this.state.questions[this.state.current] },
+      currentOptions = [null, null, null, null];
+    currentOptions[this.keyMapper(question.answer)] = "correct";
+    this.setState({ currentOptions });
+  };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.timer !== prevState.timer) {
-      if (this.state.timer <= 30 && this.state.timer > 0) {
-        this.tick();
-      } else this.setState({ timer: 0 });
-    }
-
-    if (this.state.timer === null) {
-      this.setState({ timer: 30 });
-    }
-
-    if(this.state.timer === 0 && this.state.currentOptions.length === 0){
-      this.setState({currentOptions:[true,null,null,null,null]})
-    }
-  }
-
+  //Counter TIck
   tick = () => {
     setTimeout(() => {
       if (this.state.timer > 0) {
@@ -67,6 +56,7 @@ class Assessment extends Component {
     });
   };
 
+  //Find Answer after CTA
   findAnswer = answer => {
     let question = { ...this.state.questions[this.state.current] };
     if (question.answer === answer) {
@@ -74,6 +64,7 @@ class Assessment extends Component {
     } else return { question, reason: false };
   };
 
+  //Handle Choice
   handleSelection = (index, answer) => {
     const { question, reason } = this.findAnswer(answer);
     if (this.state.currentOptions.length < 1) {
@@ -91,6 +82,32 @@ class Assessment extends Component {
     } else return null;
   };
 
+  componentDidMount() {
+    let questions = mockData;
+    this.setState({ ...questions });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+    //Ticker
+    if (this.state.timer !== prevState.timer) {
+      if (this.state.timer <= 30 && this.state.timer > 0) {
+        this.tick();
+      } else this.setState({ timer: 0 });
+    }
+
+    //Reset Counter On Next
+    if (this.state.timer === null) {
+      this.setState({ timer: 30 });
+    }
+
+    //Feedback on Reset Counter
+    if (this.state.timer === 0 && this.state.currentOptions.length === 0) {
+      this.timeOut();
+    }
+  }
+
+
   render() {
     return (
       <>
@@ -101,7 +118,7 @@ class Assessment extends Component {
           handleSelection={this.handleSelection}
           reason={this.state.score[this.state.current + 1]}
           currentOptions={this.state.currentOptions}
-        ></QuestionCard>
+        />
       </>
     );
   }
